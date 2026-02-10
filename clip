@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# 用法：
+#   cmd | clip
+#   cmd | clip N
+#   cmd | clip A B
+#
+# 行号从 0 开始
+
+# 检查 wl-copy
+if ! command -v wl-copy >/dev/null 2>&1; then
+    echo "❌ 未找到 wl-copy，请先安装：sudo apt install wl-clipboard"
+    exit 1
+fi
+
+# 没有参数：全部复制
+if [ $# -eq 0 ]; then
+    wl-copy
+    exit 0
+fi
+
+# 一个参数：0 到 N
+if [ $# -eq 1 ]; then
+    start=0
+    end=$1
+fi
+
+# 两个参数：A 到 B
+if [ $# -eq 2 ]; then
+    start=$1
+    end=$2
+fi
+
+# 参数超过 2 个
+if [ $# -gt 2 ]; then
+    echo "❌ 参数错误"
+    echo "用法：cmd | clip [start] [end]"
+    exit 1
+fi
+
+# sed 行号从 1 开始，所以 +1
+sed -n "$((start + 1)),$((end + 1))p" | wl-copy
+

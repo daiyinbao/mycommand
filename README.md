@@ -1,3 +1,5 @@
+# 该仓库用于记录一些在使用ubuntu中自己写的一些小命令
+
 # 一.ports—端口查看工具
 
 Human-friendly port viewer & killer script for Linux
